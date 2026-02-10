@@ -22,6 +22,8 @@
 
     .container {
       text-align: center;
+      max-width: 600px;
+      width: 90%;
     }
 
     h1 {
@@ -34,12 +36,97 @@
       font-size: clamp(1.2rem, 4vw, 2rem);
       opacity: 0.85;
     }
+
+    .chat {
+      margin-top: 3rem;
+      text-align: left;
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .messages {
+      min-height: 120px;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    .bot {
+      opacity: 0.9;
+      margin-bottom: 0.5rem;
+    }
+
+    .user {
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Tuesday at 6</h1>
     <p>no darksouls</p>
+
+    <div class="chat">
+      <div class="messages" id="messages">
+        <div class="bot"><strong>Bot:</strong> Ask me what we should play.</div>
+      </div>
+      <input
+        id="input"
+        type="text"
+        placeholder="Type a question and press Enter"
+      />
+    </div>
   </div>
+
+  <script>
+    const kniziaGames = [
+      "Ra",
+      "Tigris & Euphrates",
+      "Modern Art",
+      "Samurai",
+      "Lost Cities",
+      "Through the Desert",
+      "Medici",
+      "High Society",
+      "Yellow & Yangtze"
+    ];
+
+    const messages = document.getElementById("messages");
+    const input = document.getElementById("input");
+
+    function addMessage(text, className) {
+      const div = document.createElement("div");
+      div.className = className;
+      div.innerHTML = text;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function randomKnizia() {
+      const game = kniziaGames[Math.floor(Math.random() * kniziaGames.length)];
+      return `You should play <em>${game}</em>.`;
+    }
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && input.value.trim() !== "") {
+        addMessage(`<strong>You:</strong> ${input.value}`, "user");
+        input.value = "";
+
+        setTimeout(() => {
+          addMessage(`<strong>Bot:</strong> ${randomKnizia()}`, "bot");
+        }, 400);
+      }
+    });
+  </script>
 </body>
 </html>
