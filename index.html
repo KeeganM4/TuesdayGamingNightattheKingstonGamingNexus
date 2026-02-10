@@ -104,6 +104,8 @@
     const messages = document.getElementById("messages");
     const input = document.getElementById("input");
 
+    let lastGame = null;
+
     function addMessage(text, className) {
       const div = document.createElement("div");
       div.className = className;
@@ -111,8 +113,6 @@
       messages.appendChild(div);
       messages.scrollTop = messages.scrollHeight;
     }
-
-    let lastGame = null;
 
     function randomKnizia() {
       let game;
@@ -122,7 +122,6 @@
 
       lastGame = game;
       return `You should play <em>${game}</em>.`;
-    }</em>.`;
     }
 
     input.addEventListener("keydown", (e) => {
