@@ -112,9 +112,17 @@
       messages.scrollTop = messages.scrollHeight;
     }
 
+    let lastGame = null;
+
     function randomKnizia() {
-      const game = kniziaGames[Math.floor(Math.random() * kniziaGames.length)];
+      let game;
+      do {
+        game = kniziaGames[Math.floor(Math.random() * kniziaGames.length)];
+      } while (game === lastGame && kniziaGames.length > 1);
+
+      lastGame = game;
       return `You should play <em>${game}</em>.`;
+    }</em>.`;
     }
 
     input.addEventListener("keydown", (e) => {
